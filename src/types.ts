@@ -105,7 +105,7 @@ export interface Query {
    * List of relationships to include, separated by commas.
    * If undefined, all relationships are included.
    */
-  includes?: string;
+  include?: string;
   /**
    * Field to sort by. Prefix with `-` to reverse order (DESC).
    * Example: `-id` for descending order by id.

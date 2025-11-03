@@ -75,7 +75,7 @@ export class Client {
    * @param options.path - Full API path (must start with '/{version}/'). Mutually exclusive with `endpoint`.
    * @param options.endpoint - API endpoint name (e.g., 'posts', 'categories'). Mutually exclusive with `path`.
    * @param options.id - Optional resource ID to append to the endpoint
-   * @param options.query - Optional query parameters (filters, pagination, sorting, includes)
+   * @param options.query - Optional query parameters (filters, pagination, sorting, include)
    * @param options.fetch - Optional custom fetch function for this request (overrides instance default)
    * @param options.signal - Optional AbortSignal for request cancellation
    * @param options.intercept - Optional callback to intercept the Response before parsing
