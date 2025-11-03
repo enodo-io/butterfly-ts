@@ -1,0 +1,17 @@
+{
+  "data": {
+    "id": 42,
+    "type": "property",
+    "attributes": { "title": "Butterfly Demo", "description": "Example Website", "custom": {} },
+    "relationships": {},
+    "links": {
+      "self": "/v1",
+      "authors": "/v1/authors",
+      "categories": "/v1/categories",
+      "posts": "/v1/posts",
+      "taxonomies": "/v1/taxonomies"
+    },
+    "meta": {}
+  },
+  "included": []
+}

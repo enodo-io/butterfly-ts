@@ -1,0 +1,5 @@
+{
+  "errors": [
+    { "status": 404, "title": "Not Found", "detail": "Post with id \"1337\" doesn't exist" }
+  ]
+}

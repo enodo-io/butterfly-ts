@@ -1,0 +1,55 @@
+{
+  "name": "@enodo/butterfly-ts",
+  "version": "1.0.0",
+  "type": "module",
+  "homepage": "https://github.com/enodo-io/butterfly-ts",
+  "bugs": {
+    "url": "https://github.com/enodo-io/butterfly-ts/issues"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/enodo-io"
+  },
+  "author": "Jerome Musialak <jerome@eno.do>",
+  "license": "MIT",
+  "description": "Type-safe SDK for the Butterfly API",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enodo-io/butterfly-ts.git"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "lint": "eslint --config eslint.config.mjs --max-warnings=0 .",
+    "lint:tsc": "tsc --noEmit",
+    "format": "prettier --write .",
+    "test": "vitest",
+    "test:watch": "vitest --watch"
+  },
+  "keywords": [
+    "butterfly",
+    "api",
+    "typescript",
+    "sdk"
+  ],
+  "dependencies": {
+    "qs": "^6.14.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@types/node": "^24.5.2",
+    "@types/qs": "^6.14.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import-x": "^4.16.1",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-unused-imports": "^4.2.0",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.44.0",
+    "vitest": "^3.2.4"
+  }
+}

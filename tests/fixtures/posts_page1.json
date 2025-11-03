@@ -1,0 +1,116 @@
+{
+  "meta": { "total": 23, "size": 1 },
+  "data": [
+    {
+      "id": 23,
+      "type": "post",
+      "attributes": {
+        "title": "A FAQ Page",
+        "resume": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel orci semper, pretium augue sed, aliquet sapien.",
+        "slug": "a-faq-page",
+        "canonical": null,
+        "hreflangs": {},
+        "publishedAt": "2025-10-29T19:45:00.000Z",
+        "updatedAt": "2025-10-30T04:13:19.000Z",
+        "custom": {},
+        "flags": [],
+        "type": "faq"
+      },
+      "relationships": {
+        "category": { "data": { "id": 1, "type": "category" } },
+        "thumbnail": { "data": { "id": 4, "type": "video" } },
+        "authors": { "data": [{ "id": "morgan-sampleton", "type": "author" }] },
+        "terms": { "data": [] }
+      },
+      "links": { "self": "/v1/posts/23" },
+      "meta": {}
+    }
+  ],
+  "included": [
+    {
+      "id": 1,
+      "type": "category",
+      "attributes": {
+        "name": "Flumina",
+        "description": "Flumina category",
+        "path": "/flumina",
+        "slug": "flumina",
+        "custom": {}
+      },
+      "relationships": {
+        "thumbnail": { "data": { "id": 1, "type": "image" } },
+        "parentCategory": { "data": null }
+      },
+      "links": { "self": "/v1/categories/1" },
+      "meta": {}
+    },
+    {
+      "id": 1,
+      "type": "image",
+      "attributes": {
+        "name": "Enodo favicon",
+        "description": "Le favicon de Enodo",
+        "credits": null,
+        "keywords": [],
+        "mimetype": "image/png",
+        "width": 560,
+        "height": 560,
+        "fingerprints": {
+          "default": "f434445dcb9edde2e0debea35b74ee8c",
+          "thumb": "f434445dcb9edde2e0debea35b74ee8c",
+          "square": "f434445dcb9edde2e0debea35b74ee8c",
+          "cover": "f434445dcb9edde2e0debea35b74ee8c",
+          "stories": "f434445dcb9edde2e0debea35b74ee8c"
+        }
+      },
+      "relationships": {},
+      "links": { "self": "/v1/medias/1" },
+      "meta": {}
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "attributes": {
+        "name": "200th-jump_vfinal_colored.mp4",
+        "description": null,
+        "credits": null,
+        "keywords": [],
+        "mimetype": "video/mp4",
+        "width": 1080,
+        "height": 1920,
+        "duration": 138,
+        "fingerprints": {
+          "default": "449159ee8b39ceee0d77ce207581cb3c",
+          "thumb": "449159ee8b39ceee0d77ce207581cb3c",
+          "square": "449159ee8b39ceee0d77ce207581cb3c",
+          "cover": "449159ee8b39ceee0d77ce207581cb3c",
+          "stories": "449159ee8b39ceee0d77ce207581cb3c"
+        }
+      },
+      "relationships": {},
+      "links": { "self": "/v1/medias/4" },
+      "meta": {}
+    },
+    {
+      "id": "morgan-sampleton",
+      "type": "author",
+      "attributes": {
+        "name": "Morgan Sampleton",
+        "resume": null,
+        "url": null,
+        "email": null,
+        "telephone": null,
+        "type": "person",
+        "jobTitle": null,
+        "custom": {}
+      },
+      "relationships": { "thumbnail": { "data": null } },
+      "links": { "self": "/v1/authors/morgan-sampleton" },
+      "meta": {}
+    }
+  ],
+  "links": {
+    "self": "/v1/posts/?include=*&page[size]=1",
+    "next": "/v1/posts/?include=*&page[size]=1&page[number]=2"
+  }
+}
