@@ -94,8 +94,8 @@ export interface QueryFilter {
   authors?: string;
   before?: string | number;
   after?: string | number;
+  flags?: string;
   [key: `terms<${string}>`]: string;
-  flags?: string,
 }
 
 /**
