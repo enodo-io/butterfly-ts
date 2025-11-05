@@ -42,7 +42,7 @@ export type Category = IResource<
   'category',
   {
     name: string;
-    description: string;
+    description: string | null;
     path: `/${string}`;
     slug: string;
     custom: Record<string, CustomAttr>;
@@ -58,7 +58,7 @@ export interface IMedia<TType extends 'image' | 'video' | 'audio'> {
   type: TType;
   attributes: {
     name: string;
-    description: string;
+    description: string | null;
     credits: string;
     keywords: string[];
     mimetype: string;
