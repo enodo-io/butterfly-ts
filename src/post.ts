@@ -327,6 +327,37 @@ export interface Embed {
   data: string;
 }
 
+export interface TableCell {
+  content: string | BodyInlineNode[];
+  colspan?: number;
+  rowspan?: number;
+  align?: string;
+  valign?: string;
+}
+
+export interface TableData {
+  head?: TableCell[][];
+  body: TableCell[][];
+  foot?: TableCell[][];
+  caption?: string;
+}
+
+export interface Table {
+  type: 'table';
+  data: TableData;
+}
+
+export interface RelatedItem {
+  type: 'post';
+  id: number;
+}
+
+export interface Related {
+  type: 'related';
+  title: string | null;
+  data: RelatedItem[];
+}
+
 export type BodyData =
   | Title
   | Title2
@@ -356,4 +387,6 @@ export type BodyData =
   | Pagebreak
   | Markdown
   | Code
-  | Embed;
+  | Embed
+  | Table
+  | Related;
