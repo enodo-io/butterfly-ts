@@ -1,5 +1,15 @@
 import type * as PostBody from './post.js';
-import type { Property, Author, Category, Media, Post, Taxonomy, Term } from './resources.js';
+import type {
+  Property,
+  Author,
+  Category,
+  Media,
+  Post,
+  Taxonomy,
+  Term,
+  CustomStyle,
+  BlockTemplate,
+} from './resources.js';
 
 /**
  * Module namespace export for the post body types.
@@ -71,7 +81,16 @@ export interface ApiResponse<T> {
  * Union of all concrete resource variants that can appear in `included`
  * or be used as `data` in responses.
  */
-export type Resource = Property | Author | Category | Media | Post | Taxonomy | Term;
+export type Resource =
+  | Property
+  | Author
+  | Category
+  | Media
+  | Post
+  | Taxonomy
+  | Term
+  | CustomStyle
+  | BlockTemplate;
 
 /**
  * Pagination parameters for query options.

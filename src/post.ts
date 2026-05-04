@@ -1,4 +1,16 @@
 // Post body types
+
+/**
+ * Optional fields for blocks that can be tagged with a custom style or template
+ * defined in the Butterfly admin (per-property). Both fields hold the resource `key`
+ * (slug). When the referenced resource has been deleted, renderers and the editor
+ * should silently ignore the field.
+ */
+export interface Stylable {
+  style?: string;
+  template?: string;
+}
+
 export interface TextNode {
   type: 'text';
   value: string | StyledNode[];
@@ -152,51 +164,51 @@ export interface CodeData {
 }
 
 // Block types
-export interface Title2 {
+export interface Title2 extends Stylable {
   type: 'title2';
   data: string;
 }
 
-export interface Title3 {
+export interface Title3 extends Stylable {
   type: 'title3';
   data: string;
 }
 
-export interface Title4 {
+export interface Title4 extends Stylable {
   type: 'title4';
   data: string;
 }
 
-export interface Title5 {
+export interface Title5 extends Stylable {
   type: 'title5';
   data: string;
 }
 
-export interface Title6 {
+export interface Title6 extends Stylable {
   type: 'title6';
   data: string;
 }
 
 export type Title = Title2 | Title3 | Title4 | Title5 | Title6;
 
-export interface Image {
+export interface Image extends Stylable {
   type: 'image';
   data: MediaData;
 }
 
-export interface Video {
+export interface Video extends Stylable {
   type: 'video';
   data: MediaData;
 }
 
-export interface Audio {
+export interface Audio extends Stylable {
   type: 'audio';
   data: MediaData;
 }
 
 export type Media = Image | Video | Audio;
 
-export interface Gallery {
+export interface Gallery extends Stylable {
   type: 'gallery';
   data: MediaData[];
 }
@@ -276,48 +288,48 @@ export interface Iframe {
   data: IframeData;
 }
 
-export interface Quote {
+export interface Quote extends Stylable {
   type: 'quote';
   data: QuoteBlockData;
 }
 
-export interface FAQ {
+export interface FAQ extends Stylable {
   type: 'faq';
   data: FAQData;
 }
 
-export interface BulletList {
+export interface BulletList extends Stylable {
   type: 'bulletList';
   data: (string | BodyInlineNode[])[][];
 }
 
-export interface OrderedList {
+export interface OrderedList extends Stylable {
   type: 'orderedList';
   data: (string | BodyInlineNode[])[][];
 }
 
-export interface ReversedList {
+export interface ReversedList extends Stylable {
   type: 'reversedList';
   data: (string | BodyInlineNode[])[][];
 }
 
 export type List = BulletList | OrderedList | ReversedList;
 
-export interface Paragraph {
+export interface Paragraph extends Stylable {
   type: 'paragraph';
   data: string | BodyInlineNode[];
 }
 
-export interface Pagebreak {
+export interface Pagebreak extends Stylable {
   type: 'pagebreak';
 }
 
-export interface Markdown {
+export interface Markdown extends Stylable {
   type: 'markdown';
   data: string;
 }
 
-export interface Code {
+export interface Code extends Stylable {
   type: 'code';
   data: CodeData;
 }
@@ -342,7 +354,7 @@ export interface TableData {
   caption?: string;
 }
 
-export interface Table {
+export interface Table extends Stylable {
   type: 'table';
   data: TableData;
 }
@@ -352,7 +364,7 @@ export interface RelatedItem {
   id: number;
 }
 
-export interface Related {
+export interface Related extends Stylable {
   type: 'related';
   title: string | null;
   data: RelatedItem[];

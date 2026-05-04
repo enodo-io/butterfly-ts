@@ -161,3 +161,56 @@ export type SyndicatePost = IResource<
 >;
 
 export type Syndicate = SyndicateAuthor | SyndicatePost | SyndicateTerm;
+
+/**
+ * Whitelisted CSS properties allowed on a custom style.
+ * Anything outside this set is rejected by the API at write time.
+ */
+export interface CustomStyleCss {
+  color?: string;
+  backgroundColor?: string;
+  fontWeight?: string | number;
+  fontStyle?: string;
+  fontFamily?: string;
+  fontSize?: string;
+  textTransform?: string;
+  letterSpacing?: string;
+  textDecoration?: string;
+}
+
+/**
+ * A named, reusable visual style applicable to one or several block types.
+ * Referenced from a block via its `style` field (= the `key`).
+ */
+export type CustomStyle = IResource<
+  number,
+  'customstyle',
+  {
+    name: string;
+    key: string;
+    description: string | null;
+    targets: string[];
+    css: CustomStyleCss;
+  },
+  Record<string, never>
+>;
+
+/**
+ * A named template variant for a block (e.g. "info bulle", "title with icon").
+ * Referenced from a block via its `template` field (= the `key`).
+ * `iconName` references an icon from the shared icon registry by name.
+ * `config` is a free-form bag interpreted by the editor / renderer.
+ */
+export type BlockTemplate = IResource<
+  number,
+  'blocktemplate',
+  {
+    name: string;
+    key: string;
+    description: string | null;
+    targets: string[];
+    iconName: string | null;
+    config: Record<string, unknown>;
+  },
+  Record<string, never>
+>;
