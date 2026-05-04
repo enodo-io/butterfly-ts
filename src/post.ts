@@ -1,13 +1,16 @@
 // Post body types
 
 /**
- * Optional fields for blocks that can be tagged with a custom style or template
- * defined in the Butterfly admin (per-property). Both fields hold the resource `key`
- * (slug). When the referenced resource has been deleted, renderers and the editor
- * should silently ignore the field.
+ * Optional block-level field tagging a block with a named template defined in
+ * the Butterfly admin (per-property). Holds the resource `key` (slug). When
+ * the referenced template has been deleted, renderers and the editor silently
+ * ignore the field.
+ *
+ * Custom styles, by contrast, are *inline marks* — see `CustomStyleNode`
+ * below — applied to a substring of an inline-bearing block's content rather
+ * than to the whole block.
  */
 export interface Stylable {
-  style?: string;
   template?: string;
 }
 
@@ -51,6 +54,20 @@ export interface CodeNode {
   value: string | StyledNode[];
 }
 
+/**
+ * Inline wrapper that applies a named custom style (defined in the Butterfly
+ * admin under `/v1/customstyles`) to a substring of an inline-bearing block.
+ * Behaves like `strong` / `emphasis` / `underline` etc. — the difference is
+ * that the visual treatment is configured per-property rather than baked
+ * into the editor. `key` references a customstyle slug; renderers should
+ * silently ignore unknown keys (orphan after a customstyle deletion).
+ */
+export interface CustomStyleNode {
+  type: 'customstyle';
+  key: string;
+  value: string | StyledNode[];
+}
+
 // Union type for backward compatibility
 export type BaseStyledNode =
   | TextNode
@@ -60,7 +77,8 @@ export type BaseStyledNode =
   | StrikethroughNode
   | SubscriptNode
   | SuperscriptNode
-  | CodeNode;
+  | CodeNode
+  | CustomStyleNode;
 
 export interface LinkNode {
   type: 'link';
@@ -95,6 +113,7 @@ export type StyledNode =
   | SubscriptNode
   | SuperscriptNode
   | CodeNode
+  | CustomStyleNode
   | LinkNode
   | QuoteNode
   | AbbreviationNode
