@@ -196,10 +196,10 @@ export type CustomStyle = IResource<
 >;
 
 /**
- * A named template variant for a block (e.g. "info bulle", "title with icon").
- * Referenced from a block via its `template` field (= the `key`).
- * `iconName` references an icon from the shared icon registry by name.
- * `config` is a free-form bag interpreted by the editor / renderer.
+ * A named template variant for a block (e.g. "info bulle"). Referenced from
+ * a block via its `template` field (= the `key`). The site that renders the
+ * post is free to interpret the template `key` however it wants — Butterfly
+ * itself stores nothing about how the variant should look.
  */
 export type BlockTemplate = IResource<
   number,
@@ -209,8 +209,6 @@ export type BlockTemplate = IResource<
     key: string;
     description: string | null;
     targets: string[];
-    iconName: string | null;
-    config: Record<string, unknown>;
   },
   Record<string, never>
 >;
