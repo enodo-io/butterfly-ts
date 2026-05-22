@@ -115,6 +115,7 @@ export interface QueryFilter {
   after?: string | number;
   flags?: string;
   year?: string | number;
+  mlt?: string | number;
   [key: `terms<${string}>`]: string;
 }
 
