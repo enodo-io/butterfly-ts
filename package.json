@@ -1,6 +1,6 @@
 {
   "name": "@enodo/butterfly-ts",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "type": "module",
   "homepage": "https://github.com/enodo-io/butterfly-ts",
   "bugs": {

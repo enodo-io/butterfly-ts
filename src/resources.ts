@@ -98,6 +98,12 @@ export type Post = IResource<
     flags: string[];
     type: string;
     body?: BodyData[];
+    /**
+     * Estimated reading time in seconds, computed server-side from the body
+     * and the property locale. Only present when the property's `reading-time`
+     * plugin is enabled. Read-only.
+     */
+    readingTime?: number | null;
   },
   {
     category: { data: Related<'category'> | null };
