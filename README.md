@@ -23,12 +23,15 @@ const client = new Client({
 
 try {
   // get some posts
-  const posts = await client.get<Butterfly.Post[]>({ endpoint: 'posts', query: { page: 1 } });
+  const posts = await client.get<Butterfly.Post[]>({
+    endpoint: 'posts',
+    query: { page: { size: 10, number: 1 } },
+  });
   console.log(posts.data);
 
   // get next page
   if (posts.links?.next) {
-    const nextPage = await client.get<Butterfly.Post[]>({ url: posts.links.next });
+    const nextPage = await client.get<Butterfly.Post[]>({ path: posts.links.next });
   }
 } catch (err) {
   if (err instanceof RedirectError) {
@@ -225,7 +228,8 @@ setTimeout(() => controller.abort(), 1000);
 try {
   const posts = await promise;
 } catch (err) {
-  if (err.name === 'AbortError') {
+  // an aborted request rejects with a NetworkError wrapping the AbortError
+  if (err instanceof NetworkError && err.originalError.name === 'AbortError') {
     console.log('Request was cancelled');
   }
 }

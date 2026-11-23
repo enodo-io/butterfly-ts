@@ -9,11 +9,19 @@ export type CustomAttr = string | number | boolean | string[] | number[] | Relat
 // =======================
 
 export type Property = IResource<
-  string,
+  number,
   'property',
   {
     title: string;
     description: string;
+    /** BCP 47 locale of the content, e.g. `fr-FR` */
+    locale: string;
+    /** IANA timezone, e.g. `Europe/Paris` */
+    timezone: string;
+    /** Public URL of the website */
+    hostname: string;
+    /** Pattern of a post URL, e.g. `{slug}-{id}.html` */
+    permalink: string;
     custom: Record<string, CustomAttr>;
   },
   Record<string, never>
@@ -63,8 +71,10 @@ export interface IMedia<TType extends 'image' | 'video' | 'audio'> {
     keywords: string[];
     mimetype: string;
     createdAt: string;
+    custom: Record<string, CustomAttr>;
     fingerprints: {
-      source: string;
+      /** Not returned by every media: use `default` unless you know it is there */
+      source?: string;
       default: string;
       thumb: string;
       square: string;
@@ -97,6 +107,8 @@ export type Post = IResource<
     custom: Record<string, CustomAttr>;
     flags: string[];
     type: string;
+    /** Reserved to signed-in readers: its body is only served to them */
+    private: boolean;
     body?: BodyData[];
     /**
      * Estimated reading time in seconds, computed server-side from the body
