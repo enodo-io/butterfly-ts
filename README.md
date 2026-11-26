@@ -301,15 +301,15 @@ get<T extends Butterfly.Resource>({
 The standard response envelope returned by the client methods.
 
 ```ts
-type ApiResponse<T> = {
-  meta?: { total?: number; size?: number };
+type ApiResponse<T, TMeta = { total?: number; size?: number }> = {
+  meta?: TMeta;
   data: T; // primary payload (single resource, collection, or primitives)
   included: Resource[]; // side-loaded resources for relationships
   links: Record<string, string | undefined>; // e.g. self, next, prev
 };
 ```
 
-- **meta**: optional pagination/metadata values
+- **meta**: optional pagination/metadata values (typed by the second parameter of `.get<T, TMeta>()` for the endpoints that say more, like the comments of a post)
 - **data**: the main payload returned by the endpoint
 - **included**: denormalized resources used to resolve relationships
 - **links**: navigational links (pagination, self, next, prev, etc.)
@@ -319,7 +319,17 @@ type ApiResponse<T> = {
 Union of all concrete domain entities that can appear in `data` or `included`.
 
 ```ts
-type Resource = Property | Author | Category | Media | Post | Taxonomy | Term;
+type Resource =
+  | Property
+  | Author
+  | Category
+  | Media
+  | Post
+  | Comment
+  | Taxonomy
+  | Term
+  | CustomStyle
+  | BlockTemplate;
 ```
 
 Each resource follows a JSON:API-inspired shape with: `id`, `type`, `attributes`, and `relationships`.
@@ -347,6 +357,36 @@ import type { PostBody } from '@enodo/butterfly-ts';
 ```
 
 Refer to the exported types for the complete set of nodes and data payloads.
+
+### `Comment` (comments plugin)
+
+When the property has the **comments** plugin enabled, posts carry `commentsCount` and `commentsOpen`, and the comments of a post are read with their own `meta`:
+
+```ts
+import type * as Butterfly from '@enodo/butterfly-ts';
+import { getRelated } from '@enodo/butterfly-ts';
+
+const res = await client.get<Butterfly.Comment[], Butterfly.CommentsMeta>({
+  path: `/v1/posts/${post.id}/relationships/comments`,
+});
+
+res.meta?.total; // every comment shown under the post, replies included
+res.meta?.open; // does the post take new comments?
+
+for (const thread of res.data) {
+  // the first replies of a thread come in `included`
+  const replies = (thread.relationships.replies?.data ?? []).map((ref) =>
+    getRelated<Butterfly.Comment>(ref, res.included),
+  );
+}
+```
+
+- `body` is **plain text** (no HTML, line breaks kept): render it as text.
+- Replies have one level: `relationships.parent` is the comment that started the thread, `relationships.replyTo` the comment answered inside it.
+- A comment removed by its author and kept above the replies of others has `deleted: true` and no content.
+- The other replies of a thread: `/v1/comments/{id}/relationships/replies`.
+
+The client only reads. A comment is sent with a `POST` on the same path, and reported with `POST /v1/comments/{id}/reports` (`Butterfly.CommentReportReason`).
 
 ## Error handling
 

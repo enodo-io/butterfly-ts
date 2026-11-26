@@ -5,7 +5,8 @@ import { describe, it, expect } from 'vitest';
 
 import { Client } from '../src/client.js';
 import { ApiError } from '../src/errors.js';
-import { Post, Property } from '../src/types.js';
+import { Comment, CommentsMeta, Post, Property } from '../src/types.js';
+import { getRelated } from '../src/utils.js';
 
 function createFixtureFetch() {
   const fixturesDir = path.join(__dirname, 'fixtures');
@@ -54,6 +55,8 @@ function createFixtureFetch() {
         body = loadRaw('path_404.json');
         status = 404;
       }
+    } else if (pathname === '/v1/posts/7/relationships/comments') {
+      body = loadRaw('post_comments.json');
     } else if (pathname === '/v1/posts/1337') {
       body = loadRaw('post_404.json');
       status = 404;
@@ -131,5 +134,33 @@ describe('Client', () => {
     expect(headers).toBeDefined();
     expect(status).toBe(200);
     expect(headers?.get('content-type')).toContain('application/json');
+  });
+
+  it('should read the comments of a post, with their typed meta and their replies', async () => {
+    const res = await client.get<Comment[], CommentsMeta>({
+      path: '/v1/posts/7/relationships/comments',
+    });
+
+    expect(res.meta?.total).toBe(4);
+    expect(res.meta?.open).toBe(true);
+    expect(res.meta?.identity).toBe('both');
+
+    const [thread, removed] = res.data;
+    if (!thread || !removed) {
+      throw new Error('the fixture holds two threads');
+    }
+    expect(thread.attributes.repliesCount).toBe(2);
+    // the first replies of a thread come in `included`
+    const replies = (thread.relationships.replies?.data ?? []).map((ref) =>
+      getRelated<Comment>(ref, res.included),
+    );
+    expect(replies.map((reply) => reply?.attributes.authorType)).toEqual(['guest', 'staff']);
+    // a reply to a reply stays in the thread and names the comment it answers
+    expect(replies[1]?.relationships.parent.data?.id).toBe(thread.id);
+    expect(replies[1]?.relationships.replyTo.data?.id).toBe(6);
+
+    // removed by its author, kept above the replies of others
+    expect(removed.attributes.deleted).toBe(true);
+    expect(removed.attributes.body).toBeNull();
   });
 });

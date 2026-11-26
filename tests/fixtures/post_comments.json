@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "total": 4,
+    "threads": 2,
+    "open": true,
+    "replies": true,
+    "identity": "both"
+  },
+  "data": [
+    {
+      "id": 5,
+      "type": "comment",
+      "attributes": {
+        "body": "comment 5",
+        "authorName": "Ada",
+        "authorType": "member",
+        "authorId": 12,
+        "deleted": false,
+        "createdAt": "2026-11-20T10:00:00.000Z",
+        "editedAt": null,
+        "repliesCount": 2
+      },
+      "relationships": {
+        "parent": {
+          "data": null
+        },
+        "replyTo": {
+          "data": null
+        },
+        "replies": {
+          "data": [
+            {
+              "type": "comment",
+              "id": 6
+            },
+            {
+              "type": "comment",
+              "id": 7
+            }
+          ],
+          "links": {
+            "related": "/v1/comments/5/relationships/replies"
+          }
+        }
+      },
+      "links": {
+        "self": "/v1/comments/5"
+      }
+    },
+    {
+      "id": 3,
+      "type": "comment",
+      "attributes": {
+        "body": null,
+        "authorName": null,
+        "authorType": null,
+        "authorId": null,
+        "deleted": true,
+        "createdAt": "2026-11-20T10:00:00.000Z",
+        "editedAt": null,
+        "repliesCount": 1
+      },
+      "relationships": {
+        "parent": {
+          "data": null
+        },
+        "replyTo": {
+          "data": null
+        },
+        "replies": {
+          "data": [
+            {
+              "type": "comment",
+              "id": 4
+            }
+          ],
+          "links": {
+            "related": "/v1/comments/3/relationships/replies"
+          }
+        }
+      },
+      "links": {
+        "self": "/v1/comments/3"
+      }
+    }
+  ],
+  "included": [
+    {
+      "id": 6,
+      "type": "comment",
+      "attributes": {
+        "body": "comment 6",
+        "authorName": "Jean",
+        "authorType": "guest",
+        "authorId": null,
+        "deleted": false,
+        "createdAt": "2026-11-20T10:00:00.000Z",
+        "editedAt": null
+      },
+      "relationships": {
+        "parent": {
+          "data": {
+            "type": "comment",
+            "id": 5
+          }
+        },
+        "replyTo": {
+          "data": null
+        }
+      },
+      "links": {
+        "self": "/v1/comments/6"
+      }
+    },
+    {
+      "id": 7,
+      "type": "comment",
+      "attributes": {
+        "body": "comment 7",
+        "authorName": "La rédaction",
+        "authorType": "staff",
+        "authorId": null,
+        "deleted": false,
+        "createdAt": "2026-11-20T10:00:00.000Z",
+        "editedAt": null
+      },
+      "relationships": {
+        "parent": {
+          "data": {
+            "type": "comment",
+            "id": 5
+          }
+        },
+        "replyTo": {
+          "data": {
+            "type": "comment",
+            "id": 6
+          }
+        }
+      },
+      "links": {
+        "self": "/v1/comments/7"
+      }
+    },
+    {
+      "id": 4,
+      "type": "comment",
+      "attributes": {
+        "body": "comment 4",
+        "authorName": "Ada",
+        "authorType": "member",
+        "authorId": 12,
+        "deleted": false,
+        "createdAt": "2026-11-20T10:00:00.000Z",
+        "editedAt": null
+      },
+      "relationships": {
+        "parent": {
+          "data": {
+            "type": "comment",
+            "id": 3
+          }
+        },
+        "replyTo": {
+          "data": null
+        }
+      },
+      "links": {
+        "self": "/v1/comments/4"
+      }
+    }
+  ],
+  "links": {
+    "self": "/v1/posts/7/relationships/comments?page[size]=20&page[number]=1"
+  }
+}

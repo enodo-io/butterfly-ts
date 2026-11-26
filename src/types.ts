@@ -5,6 +5,7 @@ import type {
   Category,
   Media,
   Post,
+  Comment,
   Taxonomy,
   Term,
   CustomStyle,
@@ -63,13 +64,14 @@ export * from './resources.js';
 /**
  * Standard API response envelope.
  *
- * - meta: optional pagination/info (e.g. total, size)
+ * - meta: optional pagination/info (e.g. total, size). Typed by `TMeta` for
+ *   the endpoints that say more (e.g. `CommentsMeta`)
  * - data: primary payload (single resource, collection, or primitives)
  * - included: side-loaded resources to de-normalize relationships
  * - links: navigational links (e.g. next, prev, self)
  */
-export interface ApiResponse<T> {
-  meta?: { total?: number; size?: number };
+export interface ApiResponse<T, TMeta = { total?: number; size?: number }> {
+  meta?: TMeta;
   data: T;
   included: Resource[];
   links: {
@@ -87,6 +89,7 @@ export type Resource =
   | Category
   | Media
   | Post
+  | Comment
   | Taxonomy
   | Term
   | CustomStyle

@@ -116,6 +116,17 @@ export type Post = IResource<
      * plugin is enabled. Read-only.
      */
     readingTime?: number | null;
+    /**
+     * Comments shown under the post. Only present when the property's
+     * `comments` plugin is enabled. Follows on the cache of the post: the
+     * `meta.total` of the comments list is the exact number. Read-only.
+     */
+    commentsCount?: number;
+    /**
+     * Does the post take new comments? Only present when the property's
+     * `comments` plugin is enabled. Read-only.
+     */
+    commentsOpen?: boolean;
   },
   {
     category: { data: Related<'category'> | null };
@@ -124,6 +135,69 @@ export type Post = IResource<
     terms: { data: Related<`term<${string}>`>[] };
   }
 >;
+
+/**
+ * A comment of a reader under a post (`comments` plugin).
+ *
+ * Read with `GET /v1/posts/{id}/relationships/comments` (the threads of a
+ * post, their first replies in `included`) and
+ * `GET /v1/comments/{id}/relationships/replies`.
+ *
+ * `body` is plain text (no HTML, no markdown, line breaks kept): render it as
+ * text. Replies have one level: `parent` is always the comment that started
+ * the thread, `replyTo` the comment answered inside it.
+ */
+export type Comment = IResource<
+  number,
+  'comment',
+  {
+    /** Plain text. `null` once removed by its author. */
+    body: string | null;
+    authorName: string | null;
+    /** A reader signed in on the site, a reader under a free name, or the newsroom */
+    authorType: 'member' | 'guest' | 'staff' | null;
+    /**
+     * Tells the comments of a same member apart. Never the id of the reader
+     * on the site. `null` for guests and the newsroom.
+     */
+    authorId: number | null;
+    /** Removed by its author and kept above the replies of others: its other attributes are `null` */
+    deleted: boolean;
+    /** Comments that start a thread only: the replies shown under it */
+    repliesCount?: number;
+    createdAt: string;
+    /** Set once the author edited the comment */
+    editedAt: string | null;
+    /**
+     * Only in the answer to a write, for the author: a `pending` comment
+     * awaits approval and is not in the lists yet.
+     */
+    status?: 'approved' | 'pending';
+  },
+  {
+    parent: { data: Related<'comment'> | null };
+    replyTo: { data: Related<'comment'> | null };
+    /** Comments that start a thread only: the first replies, found in `included` */
+    replies?: { data: Related<'comment'>[]; links?: { related: string } };
+  }
+>;
+
+/** `meta` of the comments of a post (`GET /v1/posts/{id}/relationships/comments`) */
+export interface CommentsMeta {
+  /** Every comment shown under the post, replies included */
+  total: number;
+  /** Comments that start a thread */
+  threads: number;
+  /** Does the post take new comments? */
+  open: boolean;
+  /** Are replies open on the site? */
+  replies: boolean;
+  /** Who comments: readers signed in on the site, anyone under a free name, or both */
+  identity: 'members' | 'guests' | 'both';
+}
+
+/** Reason a reader gives when reporting a comment (`POST /v1/comments/{id}/reports`) */
+export type CommentReportReason = 'spam' | 'abuse' | 'illegal' | 'other';
 
 export interface Taxonomy {
   id: string;

@@ -105,7 +105,7 @@ export class Client {
    * });
    * ```
    */
-  async get<T>({
+  async get<T, TMeta = { total?: number; size?: number }>({
     path,
     endpoint,
     id,
@@ -113,7 +113,7 @@ export class Client {
     fetch,
     signal,
     intercept,
-  }: FetchOptions): Promise<ApiResponse<T>> {
+  }: FetchOptions): Promise<ApiResponse<T, TMeta>> {
     const fetcher = fetch ?? this.fetcher;
 
     let url: string;
@@ -177,6 +177,6 @@ export class Client {
       throw new ApiError(res.status, 'Unknown error');
     }
 
-    return data as ApiResponse<T>;
+    return data as ApiResponse<T, TMeta>;
   }
 }
